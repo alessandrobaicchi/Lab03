@@ -5,10 +5,65 @@ import multiDictionary as md
 class SpellChecker:
 
     def __init__(self):
-        pass
+        self._multi = md.MultiDictionary()
+
+
 
     def handleSentence(self, txtIn, language):
-        pass
+
+        # 1. Pulizia testo
+        txtIn = replaceChars(txtIn.lower())
+        parole = txtIn.split()
+
+        # 2. Carico il dizionario
+        self._multi.loadDictionary(language)
+
+        # -------------------------
+        # USING CONTAINS
+        # -------------------------
+        print("\nUsing contains")
+        start = time.time()
+        result = self._multi.searchWord(parole, language)
+        end = time.time()
+
+        for r in result:
+            if not r.corretta:
+                print(r)
+        print("Time elapsed", end - start)
+
+        # -------------------------
+        # USING LINEAR SEARCH
+        # -------------------------
+        print("\nUsing Linear search")
+        start = time.time()
+        result = self._multi._dizionari[language].searchLinear  # metodo singolo
+        # ma dobbiamo applicarlo a tutte le parole
+        wrong = []
+        for p in parole:
+            if not self._multi._dizionari[language].searchLinear(p):
+                wrong.append(p)
+        end = time.time()
+
+        for w in wrong:
+            print(w)
+        print("Time elapsed", end - start)
+
+        # -------------------------
+        # USING DICHOTOMIC SEARCH
+        # -------------------------
+        print("\nUsing Dichotomic search")
+        start = time.time()
+        wrong = []
+        for p in parole:
+            if not self._multi._dizionari[language].searchDichotomic(p):
+                wrong.append(p)
+        end = time.time()
+
+        for w in wrong:
+            print(w)
+        print("Time elapsed", end - start)
+
+
 
     def printMenu(self):
         print("______________________________\n" +
@@ -23,4 +78,8 @@ class SpellChecker:
 
 
 def replaceChars(text):
-    pass
+    # NIENTE spazio qui dentro
+    chars = "|*_{}[]()>#+-.!$%^;,=_~"
+    for c in chars:
+        text = text.replace(c, "")
+    return text
