@@ -6,16 +6,18 @@ class SpellChecker:
 
     def __init__(self):
         self._multi = md.MultiDictionary()
+        # E' un oggetto MultiDictionary che ha tutti i suoi metodi, ad esempio loadDictionary()
 
 
 
     def handleSentence(self, txtIn, language):
 
-        # 1. Pulizia testo
+        # 1. Pulizia testo: converte tutto in minuscolo, rimuove simboli e caratteri speciali, e poi
+        # divide la frase inserita dall'utente in parole singole
         txtIn = replaceChars(txtIn.lower())
         parole = txtIn.split()
 
-        # 2. Carico il dizionario
+        # 2. Carico il dizionario chiamando loadDictionary() di MultiDictionary
         self._multi.loadDictionary(language)
 
         # -------------------------
@@ -24,6 +26,7 @@ class SpellChecker:
         print("\nUsing contains")
         start = time.time()
         result = self._multi.searchWord(parole, language)
+        # Nota. Usa prima searchWord (di MultiDictionary) che a sua volta usa contains() di Dictionary
         end = time.time()
 
         for r in result:

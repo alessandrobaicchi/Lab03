@@ -1,6 +1,6 @@
 import spellchecker
 
-sc = spellchecker.SpellChecker()
+sc = spellchecker.SpellChecker() # Creo una istanza???
 
 while(True):
     sc.printMenu()

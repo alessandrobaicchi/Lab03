@@ -35,14 +35,17 @@ class MultiDictionary:
         if language in self._dizionari:
             return
 
-        # 2. Creo un nuovo oggetto Dictionary
+        # 2. Creo un nuovo oggetto Dictionary se il dizionario non è già presente
         dizionario = d.Dictionary()
 
+        # 3. Carico il file della lingua richiesta (es. "Italian.txt")
         filename = "resources/" + language + ".txt"
-        # 3. Carico il file della lingua (es. "Italian.txt")
         dizionario.loadDictionary(filename)
 
         # 4. Salvo il dizionario nella mappa: lingua -> oggetto Dictionary
+        # Senza questa istruzione _dizionari[language] sarebbe vuoto:
+        # nessuna parola verrebbe trovata --> tutte le ricerche darebbero "sbagliato" -->
+        # --> il programma non funzionerebbe!
         self._dizionari[language] = dizionario
 
 

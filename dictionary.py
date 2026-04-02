@@ -14,7 +14,6 @@ class Dictionary:
         except FileNotFoundError:
             print(f"File {path} non trovato!")
 
-        print("Percorso assoluto:", path)
 
 
     # Metodo "di servizio" che serve a stampare le parole di _words
